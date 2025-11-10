@@ -52,7 +52,7 @@ This is a comprehensive backend API built with **NestJS** for e-commerce operati
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/abdelrahman-2513/subnet-assessment-node
+   git clone https://github.com/abdelrahman-2513/payment-system
    cd backend
    ```
 
@@ -70,14 +70,14 @@ This is a comprehensive backend API built with **NestJS** for e-commerce operati
    # Database Configuration (PostgreSQL)
    DB_SERVER=localhost
    DB_PORT=5432
-   DB_NAME=cyshield
-   DB_USER=cyshield_user
-   DB_PASSWORD=cyshield_password
+   DB_NAME=postgres
+   DB_USER=postgres_user
+   DB_PASSWORD=postgres_password
    
    # JWT Configuration
    JWT_KEY=YourSuperSecretJWTKeyThatIsAtLeast32CharactersLong!
-   JWT_ISSUER=Cyshield
-   JWT_AUDIENCE=CyshieldUsers
+   JWT_ISSUER=postgres
+   JWT_AUDIENCE=postgresUsers
    JWT_EXPIRE_MINUTES=60
    
    # Application Configuration
@@ -340,7 +340,6 @@ The system integrates with Tamara for "Pay by Installments" functionality:
 ### Payment Flow
 1. Create order → 2. Create payment → 3. Customer pays on Tamara → 4. Webhook notification → 5. Authorize → 6. Capture → 7. Refund (if needed)
 
-For detailed Tamara integration, see the `PAYMENT_SYSTEM.md` file.
 
 ## Contributing
 
