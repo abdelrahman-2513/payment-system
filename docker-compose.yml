@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: cyshield-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: cyshield
+      POSTGRES_USER: cyshield_user
+      POSTGRES_PASSWORD: cyshield_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - cyshield-network
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: cyshield-backend
+    restart: unless-stopped
+    environment:
+      DB_SERVER: postgres
+      DB_PORT: 5432
+      DB_NAME: cyshield
+      DB_USER: cyshield_user
+      DB_PASSWORD: cyshield_password
+      JWT_KEY: YourSuperSecretJWTKeyThatIsAtLeast32CharactersLong!
+      JWT_ISSUER: Cyshield
+      JWT_AUDIENCE: CyshieldUsers
+      JWT_EXPIRE_MINUTES: 60
+      WHITELIST: http://localhost:4200
+      TAMARA_API_URL: https://api-sandbox.tamara.co
+      TAMARA_API_TOKEN: your_tamara_api_token_here
+      TAMARA_NOTIFICATION_TOKEN: your_tamara_notification_token_here
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - cyshield-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  cyshield-network:
+    driver: bridge
